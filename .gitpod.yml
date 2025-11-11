@@ -1,0 +1,20 @@
+image: gitpod/workspace-full
+
+tasks:
+  - name: Start services with docker-compose
+    init: docker-compose pull || true
+    command: |
+      docker-compose up -d
+      # esperar a que postgres esté listo (opcional)
+      while ! pg_isready -h db -p 5432 -U odoo -d postgres; do echo "waiting for db..."; sleep 1; done
+      echo "Services started"
+
+ports:
+  - port: 8069
+    onOpen: open-browser
+    visibility: public
+    # opcional: secure: true
+
+vscode:
+  extensions:
+    - ms-python.python
