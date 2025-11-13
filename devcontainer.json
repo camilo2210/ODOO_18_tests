@@ -1,5 +1,5 @@
 {
-	"name": "Node.js + PostgreSQL Dev Container",
+	"name": "ODOO + PostgreSQL Dev Container",
 	"dockerComposeFile": "../docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
