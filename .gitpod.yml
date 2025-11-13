@@ -1,20 +1,15 @@
 image: gitpod/workspace-full
 
 tasks:
-  - name: Start services with docker-compose
-    init: docker-compose pull || true
+  - name: Setup Odoo
+    init: |
+      sudo apt-get update
+      sudo apt-get install -y docker-compose
+      docker-compose -f docker-compose.yml up -d --build
     command: |
-      docker-compose up -d
-      # esperar a que postgres esté listo (opcional)
-      while ! pg_isready -h db -p 5432 -U odoo -d postgres; do echo "waiting for db..."; sleep 1; done
-      echo "Services started"
+      docker ps
+      echo "Odoo está iniciando..."
 
 ports:
   - port: 8069
-    onOpen: open-browser
-    visibility: public
-    # opcional: secure: true
-
-vscode:
-  extensions:
-    - ms-python.python
+    onOpen: open-preview
