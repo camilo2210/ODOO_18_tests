@@ -17,12 +17,14 @@ services:
       - "8069:8069"
     environment:
       HOST: db
-      PORT: 5432
       USER: odoo
       PASSWORD: odoo
     volumes:
       - ./addons:/mnt/extra-addons
       - odoo-data:/var/lib/odoo
+    networks:
+      - odoo-network
+    restart: always
 
 volumes:
   db-data:
