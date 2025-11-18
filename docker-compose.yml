@@ -1,34 +1,33 @@
 version: '3.8'
-name: node-postgres-odoo18
+
 services:
-    odoo:
-          image: odoo:18.0
-          dockerfile: Dockerfile
-          depends_on:
-            - db
-          ports:
-            - "8069:8069"
-          environment:
-            HOST: db
-            USER: odoo
-            PASSWORD: odoo
-          volumes:
-            - ./addons:/mnt/extra-addons
-            - odoo-data:/var/lib/odoo
-          command: sleep infinity
-          network_mode: 'service:db'
-          restart: always
+  web:
+    image: odoo:18.0
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./addons:/mnt/extra-addons
+      - ./config:/etc/odoo
+    restart: unless-stopped
 
-    db:
-          image: 'postgres:latest'
-          restart: unless-stopped
-          volumes:
-              - 'postgres-data:/var/lib/postgresql/data'
-          environment:
-              POSTGRES_USER: postgres
-              POSTGRES_DB: postgres
-              POSTGRES_PASSWORD: postgres
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+    restart: unless-stopped
+
 volumes:
-      postgres-data: null
-
-  
+  odoo-web-data:
+  odoo-db-data:
