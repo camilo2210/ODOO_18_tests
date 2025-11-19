@@ -45,8 +45,3 @@ networks:
   odoo-network:
     # A veces, la configuración se pasa directamente aquí en lugar de en un archivo .conf
     # command: -- --db_host=db --db_user=odoo --db_password=myodoo --addons-path=/mnt/extra-addons,/mnt/enterprise-addons
-
-networks:
-odoo-network:
-# A veces, la configuración se pasa directamente aquí en lugar de en un archivo .conf
-# command: -- --db_host=db --db_user=odoo --db_password=myodoo --addons-path=/mnt/extra-addons,/mnt/enterprise-addons
